@@ -313,7 +313,9 @@ const searchVideo = async (req, res) => {
   try {
     const results = await Video.find({
       $text: { $search: searchTerm },
-    }).populate("writer");
+    })
+      .populate("writer")
+      .sort("-totalView");
     return res.json({
       success: true,
       videos: results,
