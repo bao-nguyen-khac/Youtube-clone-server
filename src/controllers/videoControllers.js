@@ -301,6 +301,32 @@ const getTrendingVideo = async (req, res) => {
   }
 };
 
+const searchVideo = async (req, res) => {
+  const searchTerm = req.query.q;
+  if (!searchTerm.trim()) {
+    return res.status(400).json({
+      success: false,
+      message: "Missing paramaters!",
+    });
+  }
+
+  try {
+    const results = await Video.find({
+      $text: { $search: searchTerm },
+    }).populate("writer");
+    return res.json({
+      success: true,
+      videos: results,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Server not found!",
+    });
+  }
+};
+
 module.exports = {
   getAllVideos,
   addNewVideo,
@@ -314,4 +340,5 @@ module.exports = {
   getVideoSubsrciption,
   descView,
   getTrendingVideo,
+  searchVideo,
 };

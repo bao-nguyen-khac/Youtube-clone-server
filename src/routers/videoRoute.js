@@ -14,6 +14,7 @@ const {
   getVideoSubsrciption,
   descView,
   getTrendingVideo,
+  searchVideo,
 } = require("../controllers/videoControllers");
 
 // GET
@@ -73,5 +74,9 @@ route.put("/desc-view/:videoId", descView);
 // GET
 // trending video
 route.get("/xu-huong/trending", getTrendingVideo);
+
+// GET
+// Search video
+route.get("/multi/search", searchVideo);
 
 module.exports = route;

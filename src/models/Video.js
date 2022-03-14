@@ -31,4 +31,10 @@ const Video = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Video", Video);
+Video.index({ title: "text" });
+
+const VideoModels = mongoose.model("Video", Video);
+
+VideoModels.createIndexes({ title: "text" });
+
+module.exports = VideoModels;
