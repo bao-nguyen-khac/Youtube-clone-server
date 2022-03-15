@@ -40,8 +40,8 @@ const getVideoFavourite = async (req, res) => {
   const userId = req.userId;
 
   try {
-    const video_favourite = await Video_Favourite.find({ userId }).populate(
-      "videoId"
+    const video_favourite = await Video_Favourite.find({ userId }).sort(
+      "-createdAt"
     );
 
     const videoArray = [];

@@ -329,6 +329,27 @@ const searchVideo = async (req, res) => {
   }
 };
 
+const getLikeVideo = async (req, res) => {
+  const userId = req.userId;
+
+  try {
+    const like = await Like.find({ userId });
+    const videoIdLike = [];
+    like.forEach((p) => videoIdLike.push(p.videoId));
+    const videos = await Video.find({ _id: { $in: videoIdLike } });
+    return res.json({
+      success: true,
+      videos,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Server not found!",
+    });
+  }
+};
+
 module.exports = {
   getAllVideos,
   addNewVideo,
@@ -343,4 +364,5 @@ module.exports = {
   descView,
   getTrendingVideo,
   searchVideo,
+  getLikeVideo,
 };
