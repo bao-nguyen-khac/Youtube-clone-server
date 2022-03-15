@@ -350,6 +350,32 @@ const getLikeVideo = async (req, res) => {
   }
 };
 
+const getMyVideo = async (req, res) => {
+  const userId = req.userId;
+  const page = +req.query.page || 1;
+  const limit = +req.query.limit || 12;
+  const skip = (page - 1) * limit;
+  try {
+    const total = await Video.countDocuments({ writer: userId });
+    const videos = await Video.find({ writer: userId })
+      .populate("writer")
+      .sort("-createdAt")
+      .skip(skip)
+      .limit(limit);
+    return res.json({
+      success: true,
+      videos,
+      totalPage: Math.ceil(total / limit),
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Server not found!",
+    });
+  }
+};
+
 module.exports = {
   getAllVideos,
   addNewVideo,
@@ -365,4 +391,5 @@ module.exports = {
   getTrendingVideo,
   searchVideo,
   getLikeVideo,
+  getMyVideo,
 };

@@ -16,6 +16,7 @@ const {
   getTrendingVideo,
   searchVideo,
   getLikeVideo,
+  getMyVideo,
 } = require("../controllers/videoControllers");
 
 // GET
@@ -81,8 +82,13 @@ route.get("/xu-huong/trending", getTrendingVideo);
 route.get("/multi/search", searchVideo);
 
 // GET
-// get my video
+// get liked video
 // Private
 route.get("/me/like-video", IsLogin, getLikeVideo);
+
+// GET
+// get my video
+// Private
+route.get("/me/my-video", IsLogin, getMyVideo);
 
 module.exports = route;
