@@ -9,6 +9,7 @@ const userRoute = require("./routers/userRoute");
 const videoRoute = require("./routers/videoRoute");
 const subsrciptionRoute = require("./routers/subsrciptionRoute");
 const favouriteRoute = require("./routers/video_favouriteRoute");
+const channelRoute = require("./routers/channelRoute");
 
 const app = express();
 const URLDB = `mongodb+srv://${process.env.NAME}:${process.env.PASSWORDMONGO}@youtube-clone.skcs0.mongodb.net/youtube-clone?retryWrites=true&w=majority`;
@@ -40,6 +41,7 @@ app.use("/api/user", userRoute);
 app.use("/api/video", videoRoute);
 app.use("/api/sub", subsrciptionRoute);
 app.use("/api/favourite", favouriteRoute);
+app.use("/api/channel", channelRoute);
 
 const PORT = process.env.PORT || 5000;
 
