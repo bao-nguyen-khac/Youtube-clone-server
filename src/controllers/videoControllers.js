@@ -336,7 +336,9 @@ const getLikeVideo = async (req, res) => {
     const like = await Like.find({ userId });
     const videoIdLike = [];
     like.forEach((p) => videoIdLike.push(p.videoId));
-    const videos = await Video.find({ _id: { $in: videoIdLike } });
+    const videos = await Video.find({ _id: { $in: videoIdLike } }).populate(
+      "writer"
+    );
     return res.json({
       success: true,
       videos,

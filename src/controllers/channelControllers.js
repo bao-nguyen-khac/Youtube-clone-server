@@ -56,7 +56,29 @@ const getChannelVideo = async (req, res) => {
   }
 };
 
+const updateChannel = async (req, res) => {
+  const userId = req.userId;
+  try {
+    const updated = await User.findOneAndUpdate(
+      { _id: userId },
+      { ...req.body }
+    );
+
+    return res.json({
+      success: true,
+      channel: req.body,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Server not found!",
+    });
+  }
+};
+
 module.exports = {
   getChannelInfo,
   getChannelVideo,
+  updateChannel,
 };
