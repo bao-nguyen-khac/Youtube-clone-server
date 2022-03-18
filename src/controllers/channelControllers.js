@@ -7,7 +7,6 @@ const getChannelInfo = async (req, res) => {
 
   try {
     const channel = await User.findOne({ _id: channelId }).select("-password");
-    const subsrciptionCount = await Subsrciption.find({ channelId: channelId });
     if (!channel) {
       return res.status(400).json({
         success: false,
@@ -18,7 +17,6 @@ const getChannelInfo = async (req, res) => {
     return res.json({
       success: true,
       channel,
-      subsrciptionCount: subsrciptionCount.length,
     });
   } catch (error) {
     console.log(error);
@@ -106,9 +104,9 @@ const getChannelSubsrciption = async (req, res) => {
   const userId = req.userId;
 
   try {
-    const subsrciption = await Subsrciption.find({ userId }).populate(
-      "channelId"
-    );
+    const subsrciption = await Subsrciption.find({ userId })
+      .populate("channelId")
+      .sort("createdAt");
     return res.json({
       success: true,
       subsrciption,
