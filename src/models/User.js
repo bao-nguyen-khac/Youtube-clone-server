@@ -50,4 +50,8 @@ const User = new Schema(
   }
 );
 
-module.exports = mongoose.model("User", User);
+User.index({ name: "text" });
+const userModel = mongoose.model("User", User);
+userModel.createIndexes({ name: "text" });
+
+module.exports = userModel;

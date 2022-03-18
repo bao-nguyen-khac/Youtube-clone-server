@@ -32,9 +32,11 @@ const Video = new Schema(
 );
 
 Video.index({ title: "text" });
+Video.index({ description: "text" });
 
 const VideoModels = mongoose.model("Video", Video);
 
 VideoModels.createIndexes({ title: "text" });
+VideoModels.createIndexes({ description: "text" });
 
 module.exports = VideoModels;

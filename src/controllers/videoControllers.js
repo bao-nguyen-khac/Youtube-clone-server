@@ -318,7 +318,7 @@ const searchVideo = async (req, res) => {
       .sort("-totalView");
     return res.json({
       success: true,
-      videos: results,
+      results,
     });
   } catch (error) {
     console.log(error);

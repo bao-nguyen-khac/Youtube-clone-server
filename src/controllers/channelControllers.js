@@ -77,8 +77,55 @@ const updateChannel = async (req, res) => {
   }
 };
 
+const searchChannel = async (req, res) => {
+  const searchTerm = req.query.q;
+  if (!searchTerm.trim())
+    return res.status(400).json({
+      success: false,
+      message: "Missing parameters!",
+    });
+
+  try {
+    const results = await User.find({
+      $text: { $search: searchTerm },
+    });
+    return res.json({
+      success: true,
+      results,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Server not found!",
+    });
+  }
+};
+
+const getChannelSubsrciption = async (req, res) => {
+  const userId = req.userId;
+
+  try {
+    const subsrciption = await Subsrciption.find({ userId }).populate(
+      "channelId"
+    );
+    return res.json({
+      success: true,
+      subsrciption,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Server not found!",
+    });
+  }
+};
+
 module.exports = {
   getChannelInfo,
   getChannelVideo,
   updateChannel,
+  searchChannel,
+  getChannelSubsrciption,
 };
