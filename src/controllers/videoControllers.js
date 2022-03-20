@@ -352,6 +352,57 @@ const getLikeVideo = async (req, res) => {
   }
 };
 
+const editVideo = async (req, res) => {
+  const _id = req.params.id;
+
+  try {
+    const updatedVideo = await Video.findOneAndUpdate(
+      { _id },
+      {
+        title: req.body.title,
+        description: req.body.description,
+        videoThumnail: req.body.videoThumnail,
+      }
+    );
+
+    if (updatedVideo) {
+      return res.json({
+        success: true,
+        video: {
+          _id,
+          ...req.body,
+        },
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Server not found!",
+    });
+  }
+};
+
+const deleteVideo = async (req, res) => {
+  const _id = req.params.id;
+
+  try {
+    const deleteVideo = await Video.findOneAndDelete({ _id });
+    if (deleteVideo) {
+      return res.json({
+        success: true,
+        message: "Delete success!",
+      });
+    }
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({
+      success: false,
+      message: "Server not found!",
+    });
+  }
+};
+
 module.exports = {
   getAllVideos,
   addNewVideo,
@@ -367,4 +418,6 @@ module.exports = {
   getTrendingVideo,
   searchVideo,
   getLikeVideo,
+  editVideo,
+  deleteVideo,
 };

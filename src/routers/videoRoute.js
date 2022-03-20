@@ -16,6 +16,8 @@ const {
   getTrendingVideo,
   searchVideo,
   getLikeVideo,
+  editVideo,
+  deleteVideo,
 } = require("../controllers/videoControllers");
 
 // GET
@@ -84,5 +86,13 @@ route.get("/multi/search", searchVideo);
 // get liked video
 // Private
 route.get("/me/like-video", IsLogin, getLikeVideo);
+
+// PUT
+// edit video
+route.put("/:id", IsLogin, editVideo);
+
+// DELETE
+// delete video
+route.delete("/:id", IsLogin, deleteVideo);
 
 module.exports = route;
